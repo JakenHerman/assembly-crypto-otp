@@ -3,6 +3,8 @@ section .data
 	bitmask				db				0Fh
 	msg					db				"We attack at dawn", '$'
 	prompt     			db        		"String to encrypt: ", CR, 10, '$'
+	afenc				db				"The message after encryption is: ", CR, 10, '$'
+	afdec				db				"The message after decryption is: ", CR, 10, '$'
 
 section .bss
 	encode	resb	80
@@ -42,6 +44,7 @@ print:
         lodsb                     ;read first char into al
         mov     ah, 2             ;display char fcn
         int		21h
+ 
         
 print2:
         mov     si, buffer            ;set up for lodsb
@@ -49,7 +52,13 @@ print2:
         mov     ah, 2             ;display char fcn
         int		21h
 
+
 	mov	si, 0
+	
+	mov	ah, 9
+	mov	dx, afenc
+	int 21h
+
 	
 CODER:
 	cmp	byte [si+msg], '$'
@@ -67,6 +76,11 @@ ENDCODER:
 	int	21h
 	mov	si, 0
 
+
+	mov	ah, 9
+	mov	dx, afdec
+	int	21h
+	mov	ax, 4C00h
 
 _while:
 	cmp	byte[si+encode], '$'
