@@ -15,8 +15,8 @@ section .bss
 
 section .text
 
-	mov			ah, 9					;print prompt
-	mov			dx, prompt				;what to print
+	mov	ah, 9	;print prompt
+	mov	dx, prompt	;what to print
 	int			21h						;print it.
 
 ;input a char from kbd into string1
